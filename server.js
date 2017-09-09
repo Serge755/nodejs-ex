@@ -59,6 +59,7 @@ var initDb = function(callback) {
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
+  console.log("Hello!!!");
   if (!db) {
     initDb(function(err){});
   }
@@ -100,6 +101,6 @@ initDb(function(err){
 });
 
 app.listen(port, ip);
-console.log('Server running on http://%s:%s', ip, port);
+console.log('Ok Server running on http://%s:%s', ip, port);
 
 module.exports = app ;
