@@ -101,6 +101,6 @@ initDb(function(err){
 });
 
 app.listen(port, ip);
-console.log('Ok Server running on http://%s:%s', ip, port);
+console.log('Okay Server running on http://%s:%s', ip, port);
 
 module.exports = app ;
