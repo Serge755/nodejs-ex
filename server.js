@@ -1,7 +1,61 @@
 //  OpenShift sample Node application
-var express = require('express'),
-    app     = express(),
-    morgan  = require('morgan');
+
+
+
+
+var WebSocketServer = require("ws").Server
+var http = require("http")
+var express = require("express")
+var app = express()
+var port = 3000;
+
+app.use(express.static(__dirname + "/"))
+
+var server = http.createServer(app)
+server.listen(port)
+
+console.log("http server listening on %d", port)
+
+var wss = new WebSocketServer({server: server})
+console.log("websocket server created");
+
+
+var text = '';
+
+  W = [];
+  
+  
+//***********************************************
+wss.on("connection", function(ws) 
+{
+    ws.send(text);
+	
+     ws.on("close", function() {
+	 ws.enable = false; 
+    })
+  
+  
+    ws.on('message', function message(data) 
+    {
+      //console.log('Roundtrip time: ' + (Date.now() - parseInt(data)) + 'ms', flags);
+	 text += data + '/';
+	    //write(text);
+	 for (var n = 0; n < W.length; n++) if (W[n].enable === true) W[n].send(data);
+	 //append(data);
+    })
+	
+	ws.enable = true; 
+	
+	W[W.length] = ws;
+
+})
+
+
+
+/*
+//var express = require('express'),
+//    app     = express(),
+ var   morgan  = require('morgan');
     
 Object.assign=require('object-assign')
 
@@ -104,3 +158,5 @@ app.listen(port, ip);
 console.log('Okay Server running on http://%s:%s', ip, port);
 
 module.exports = app ;
+
+*/
