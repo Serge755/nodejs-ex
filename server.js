@@ -3,6 +3,53 @@
 
 
 
+
+
+const express = require('express');
+
+const SocketServer = require('ws').Server;
+
+
+var colors = require('colors');  
+
+colors.setTheme({
+  custom: ['green', 'bold', 'italic'],
+  error: ['red', 'bold'],
+  warn:['yellow', 'bold'],
+});
+
+console.info('Server started..............................................'.custom);  
+  
+
+
+const wss = new SocketServer({ port:3000, verifyClient: function(info, callback) 
+{
+  callback(true);
+  console.log('origin: ' + info.origin);
+}});
+
+
+//*****************************************************************************************************
+wss.on('connection', (ws) => 
+{
+	//console.log('ws.origin: ' + ws.upgradeReq.headers.origin);	
+    //console.log('Client connected :' + current);
+
+	//**********************************
+    ws.on('close', () =>
+	{
+		console.log('Client disconnected : ' + ws.num + ' ' + ws.name);
+	});
+	
+	ws.onmessage = function(event){
+		console.info('message'.warn);  
+	}
+	
+});
+
+
+
+/*
 var WebSocketServer = require("ws").Server
 var http = require("http")
 var express = require("express")
@@ -26,7 +73,7 @@ console.log(wss);
 wss.on("connection", function(ws) 
 {
     ws.send("Hi");
-	
+	console.log('message');
   
     ws.on('message', function message(data) 
     {
