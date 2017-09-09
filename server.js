@@ -8,8 +8,10 @@ var http = require("http")
 var express = require("express")
 var app = express()
 var port = 3000;
+var ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
 app.use(express.static(__dirname + "/"))
+app.engine('html', require('ejs').renderFile);
 
 var server = http.createServer(app)
 server.listen(port)
@@ -18,6 +20,7 @@ console.log("http server listening on %d", port)
 
 var wss = new WebSocketServer({server: server})
 console.log("websocket server created");
+console.log(wss);
 
 //***********************************************
 wss.on("connection", function(ws) 
@@ -31,6 +34,17 @@ wss.on("connection", function(ws)
     })
 
 })
+
+
+app.get('/', function (req, res) {
+     console.log("Hello!!!");
+    res.render('index.html', { pageCountMessage : null});
+
+});
+
+app.listen(8080, ip);
+module.exports = app;
+
 
 
 
