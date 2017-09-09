@@ -1,10 +1,22 @@
+
 const express = require('express');
 
 const SocketServer = require('ws').Server;
 
+/*
+var colors = require('colors');  
+
+colors.setTheme({
+  custom: ['green', 'bold', 'italic'],
+  error: ['red', 'bold'],
+  warn:['yellow', 'bold'],
+});
+
+console.info('Server started..............................................'.custom);  
+*/
 console.log('Server started..............................................');
 
-const wss = new SocketServer({ port:3000});
+const wss = new SocketServer({ port:5858});
 
 
 //*****************************************************************************************************
