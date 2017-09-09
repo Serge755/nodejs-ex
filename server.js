@@ -19,34 +19,16 @@ console.log("http server listening on %d", port)
 var wss = new WebSocketServer({server: server})
 console.log("websocket server created");
 
-
-var text = '';
-
-  W = [];
-  
-  
 //***********************************************
 wss.on("connection", function(ws) 
 {
-    ws.send(text);
+    ws.send("Hi");
 	
-     ws.on("close", function() {
-	 ws.enable = false; 
-    })
-  
   
     ws.on('message', function message(data) 
     {
-      //console.log('Roundtrip time: ' + (Date.now() - parseInt(data)) + 'ms', flags);
-	 text += data + '/';
-	    //write(text);
-	 for (var n = 0; n < W.length; n++) if (W[n].enable === true) W[n].send(data);
-	 //append(data);
+      console.log('message');
     })
-	
-	ws.enable = true; 
-	
-	W[W.length] = ws;
 
 })
 
